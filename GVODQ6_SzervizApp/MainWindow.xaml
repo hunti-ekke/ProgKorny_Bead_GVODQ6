@@ -1,12 +1,32 @@
 ﻿<Window x:Class="GVODQ6_SzervizApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GVODQ6_SzervizApp"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="Szerviz Munkalap Kezelő" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Keresés (Rendszám):" VerticalAlignment="Center" Margin="0,0,10,0"/>
+            <TextBox x:Name="txtKereses" Width="150" TextChanged="txtKereses_TextChanged"/>
+
+            <TextBlock Text="Szűrés (Állapot):" VerticalAlignment="Center" Margin="20,0,10,0"/>
+            <ComboBox x:Name="cmbSzures" Width="120" SelectionChanged="cmbSzures_SelectionChanged">
+                <ComboBoxItem Content="Minden" IsSelected="True"/>
+                <ComboBoxItem Content="Folyamatban"/>
+                <ComboBoxItem Content="Kész"/>
+                <ComboBoxItem Content="Alkatrészre vár"/>
+            </ComboBox>
+        </StackPanel>
+
+        <DataGrid x:Name="dgMunkalapok" Grid.Row="1" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Új munkalap" Width="100" Margin="0,0,10,0" Click="btnUj_Click"/>
+            <Button Content="Törlés" Width="100" Click="btnTorles_Click"/>
+        </StackPanel>
     </Grid>
 </Window>

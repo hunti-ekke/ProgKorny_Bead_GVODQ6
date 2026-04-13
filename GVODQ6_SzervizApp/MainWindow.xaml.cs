@@ -16,9 +16,49 @@ namespace GVODQ6_SzervizApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DatabaseHelper dbHelper;
+
         public MainWindow()
         {
             InitializeComponent();
+            dbHelper = new DatabaseHelper();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            AdatokBetoltese();
+        }
+
+        private void AdatokBetoltese()
+        {
+            try
+            {
+                dgMunkalapok.ItemsSource = dbHelper.GetMunkalapok().DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Adatbázis hiba:\n\n" + ex.Message, "Hiba", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void txtKereses_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void cmbSzures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnUj_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnTorles_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
