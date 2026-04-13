@@ -31,5 +31,18 @@ namespace GVODQ6_SzervizApp
             }
             return table;
         }
+
+        public void DeleteMunkalap(int id)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "DELETE FROM Munkalapok WHERE MunkalapID = @id";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
