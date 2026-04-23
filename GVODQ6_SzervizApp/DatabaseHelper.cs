@@ -22,7 +22,7 @@ namespace GVODQ6_SzervizApp
             DataTable table = new DataTable();
             using (MySqlConnection conn = GetConnection())
             {
-                string query = @"SELECT m.MunkalapID, m.Rendszam, m.Hiba_leirasa, m.Allapot, m.Rogzites_datuma, m.UgyfelID, u.Nev 
+                string query = @"SELECT m.MunkalapID, m.Rendszam, m.Hiba_leirasa, m.Allapot, m.Rogzites_datuma, m.UgyfelID, u.Nev, u.Telefonszam 
                                  FROM Munkalapok m 
                                  JOIN Ugyfelek u ON m.UgyfelID = u.UgyfelID";
                 MySqlCommand cmd = new MySqlCommand(query, conn);

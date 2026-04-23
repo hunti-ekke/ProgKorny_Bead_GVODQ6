@@ -24,6 +24,15 @@ namespace GVODQ6_SzervizApp
         {
             InitializeComponent();
             dbHelper = new DatabaseHelper();
+            cmbOrder.ItemsSource = new List<Mezo>
+{
+                new Mezo { Nev = "MunkalapID", Cimke = "Azonosító" },
+                new Mezo { Nev = "Rendszam", Cimke = "Rendszám" },
+                new Mezo { Nev = "Hiba_leirasa", Cimke = "Leírás" },
+                new Mezo { Nev = "Allapot", Cimke = "Állapot" },
+                new Mezo { Nev = "Rogzites_datuma", Cimke = "Rögzítés dátuma" },
+                new Mezo { Nev = "UgyfelID", Cimke = "Ügyfél azonosító" }
+            };
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -44,7 +53,7 @@ namespace GVODQ6_SzervizApp
             }
         }
 
-        private void SearchAndFilter()
+        private void SearchAndFilterAndOrder()
         {
             if (munkalapokView == null) return;
 
@@ -64,17 +73,23 @@ namespace GVODQ6_SzervizApp
                 filter += $"Allapot = '{filterStatus}'";
             }
 
+            munkalapokView.Sort = cmbOrder.SelectedValue.ToString();
             munkalapokView.RowFilter = filter;
         }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SearchAndFilter();
+            SearchAndFilterAndOrder();
         }
 
         private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SearchAndFilter();
+            SearchAndFilterAndOrder();
+        }
+
+        private void cmbOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SearchAndFilterAndOrder();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -146,5 +161,11 @@ namespace GVODQ6_SzervizApp
 
             ugyfelAblak.ShowDialog();
         }
+    }
+
+    public class Mezo
+    {
+        public string Nev { get; set; }
+        public string Cimke { get; set; }
     }
 }

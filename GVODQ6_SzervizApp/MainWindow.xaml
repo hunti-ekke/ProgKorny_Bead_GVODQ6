@@ -20,16 +20,20 @@
                 <ComboBoxItem Content="Kész"/>
                 <ComboBoxItem Content="Alkatrészre vár"/>
             </ComboBox>
+            
+            <TextBlock Text="Rendezés (Állapot):" Margin="20,0,10,0"/>
+            <ComboBox x:Name="cmbOrder" Width="148" SelectionChanged="cmbOrder_SelectionChanged" DisplayMemberPath="Cimke" SelectedValuePath="Nev"/>
         </StackPanel>
 
         <DataGrid x:Name="dgMunkalapok" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Azonosító" Binding="{Binding MunkalapID}"/>
                 <DataGridTextColumn Header="Rendszám" Binding="{Binding Rendszam}"/>
-                <DataGridTextColumn Header="Ügyfél neve" Binding="{Binding Nev}"/>
+                <DataGridTextColumn Header="Ügyfél neve" Binding="{Binding Nev}" />
                 <DataGridTextColumn Header="Hiba leírása" Binding="{Binding Hiba_leirasa}" Width="*"/>
                 <DataGridTextColumn Header="Állapot" Binding="{Binding Allapot}"/>
                 <DataGridTextColumn Header="Rögzítés dátuma" Binding="{Binding Rogzites_datuma}"/>
+                <DataGridTextColumn Header="Telefonszám" Binding="{Binding Telefonszam}"/>
             </DataGrid.Columns>
         </DataGrid>
 
