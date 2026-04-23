@@ -28,10 +28,10 @@ namespace GVODQ6_SzervizApp
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            AdatokBetoltese();
+            LoadData();
         }
 
-        private void AdatokBetoltese()
+        private void LoadData()
         {
             try
             {
@@ -44,40 +44,40 @@ namespace GVODQ6_SzervizApp
             }
         }
 
-        private void SzuroEsKeresoAlkalmazasa()
+        private void SearchAndFilter()
         {
             if (munkalapokView == null) return;
 
-            string keresesText = txtKereses.Text.Trim().Replace("'", "''");
-            string szuresAllapot = (cmbSzures.SelectedItem as ComboBoxItem)?.Content.ToString();
+            string searchText = txtSearch.Text.Trim().Replace("'", "''");
+            string filterStatus = (cmbFilter.SelectedItem as ComboBoxItem).Content.ToString();
 
             string filter = "";
 
-            if (!string.IsNullOrEmpty(keresesText))
+            if (!string.IsNullOrEmpty(searchText))
             {
-                filter += $"Rendszam LIKE '%{keresesText}%'";
+                filter += $"Rendszam LIKE '%{searchText}%'";
             }
 
-            if (szuresAllapot != "Minden" && !string.IsNullOrEmpty(szuresAllapot))
+            if (filterStatus != "Minden" && !string.IsNullOrEmpty(filterStatus))
             {
                 if (!string.IsNullOrEmpty(filter)) filter += " AND ";
-                filter += $"Allapot = '{szuresAllapot}'";
+                filter += $"Allapot = '{filterStatus}'";
             }
 
             munkalapokView.RowFilter = filter;
         }
 
-        private void txtKereses_TextChanged(object sender, TextChangedEventArgs e)
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SzuroEsKeresoAlkalmazasa();
+            SearchAndFilter();
         }
 
-        private void cmbSzures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cmbFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SzuroEsKeresoAlkalmazasa();
+            SearchAndFilter();
         }
 
-        private void btnTorles_Click(object sender, RoutedEventArgs e)
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (dgMunkalapok.SelectedItem != null)
             {
@@ -95,7 +95,7 @@ namespace GVODQ6_SzervizApp
                     try
                     {
                         dbHelper.DeleteMunkalap(id);
-                        AdatokBetoltese();
+                        LoadData();
                     }
                     catch (Exception ex)
                     {
@@ -111,7 +111,40 @@ namespace GVODQ6_SzervizApp
 
         private void btnUj_Click(object sender, RoutedEventArgs e)
         {
+            UjMunkalapWindow ujAblak = new UjMunkalapWindow();
+            ujAblak.Owner = this;
 
+            if (ujAblak.ShowDialog() == true)
+            {
+                LoadData();
+            }
+        }
+
+        private void btnSzerkeszt_Click(object sender, RoutedEventArgs e)
+        {
+            if (dgMunkalapok.SelectedItem != null)
+            {
+                DataRowView row = (DataRowView)dgMunkalapok.SelectedItem;
+                SzerkesztoWindow szerkeszto = new SzerkesztoWindow(row);
+                szerkeszto.Owner = this;
+
+                if (szerkeszto.ShowDialog() == true)
+                {
+                    LoadData();
+                }
+            }
+            else
+            {
+                MessageBox.Show("Válassz ki egy sort a szerkesztéshez!", "Figyelmeztetés", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private void btnUjUgyfel_Click(object sender, RoutedEventArgs e)
+        {
+            UjUgyfelWindow ugyfelAblak = new UjUgyfelWindow();
+            ugyfelAblak.Owner = this;
+
+            ugyfelAblak.ShowDialog();
         }
     }
 }

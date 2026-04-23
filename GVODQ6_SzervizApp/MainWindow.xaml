@@ -11,10 +11,10 @@
 
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBlock Text="Keresés (Rendszám):" VerticalAlignment="Center" Margin="0,0,10,0"/>
-            <TextBox x:Name="txtKereses" Width="150" TextChanged="txtKereses_TextChanged"/>
+            <TextBox x:Name="txtSearch" Width="150" TextChanged="txtSearch_TextChanged"/>
 
             <TextBlock Text="Szűrés (Állapot):" VerticalAlignment="Center" Margin="20,0,10,0"/>
-            <ComboBox x:Name="cmbSzures" Width="120" SelectionChanged="cmbSzures_SelectionChanged">
+            <ComboBox x:Name="cmbFilter" Width="120" SelectionChanged="cmbFilter_SelectionChanged">
                 <ComboBoxItem Content="Minden" IsSelected="True"/>
                 <ComboBoxItem Content="Folyamatban"/>
                 <ComboBoxItem Content="Kész"/>
@@ -22,11 +22,25 @@
             </ComboBox>
         </StackPanel>
 
-        <DataGrid x:Name="dgMunkalapok" Grid.Row="1" AutoGenerateColumns="True" IsReadOnly="True" SelectionMode="Single"/>
+        <DataGrid x:Name="dgMunkalapok" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Azonosító" Binding="{Binding MunkalapID}"/>
+                <DataGridTextColumn Header="Rendszám" Binding="{Binding Rendszam}"/>
+                <DataGridTextColumn Header="Ügyfél neve" Binding="{Binding Nev}"/>
+                <DataGridTextColumn Header="Hiba leírása" Binding="{Binding Hiba_leirasa}" Width="*"/>
+                <DataGridTextColumn Header="Állapot" Binding="{Binding Allapot}"/>
+                <DataGridTextColumn Header="Rögzítés dátuma" Binding="{Binding Rogzites_datuma}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,10,0,0">
+            <Button Content="Új ügyfél" Width="100" Click="btnUjUgyfel_Click"></Button>
+        </StackPanel>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
             <Button Content="Új munkalap" Width="100" Margin="0,0,10,0" Click="btnUj_Click"/>
-            <Button Content="Törlés" Width="100" Click="btnTorles_Click"/>
+            <Button Content="Szerkesztés" Width="100" Margin="0,0,10,0" Click="btnSzerkeszt_Click" Background="#FF109C59"/>
+            <Button Content="Törlés" Width="100" Click="btnDelete_Click" Background="Red"/>
         </StackPanel>
     </Grid>
 </Window>
